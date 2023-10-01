@@ -28,13 +28,13 @@ const resolvers = {
             return { token, user };
         },
 
-        adduser:  async (parent, { username, email, password }) {
+        addUser:  async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
             return { token, user };
         },
 
-        saveBook:  async (parent, { input }, { user }) {
+        saveBook:  async (parent, { input }, { user }) => {
             const updatedUser = await User.findOneAndUpdate(
               { _id: user._id },
               { $addToSet: { savedBooks: input } },
@@ -43,7 +43,7 @@ const resolvers = {
             return updatedUser;
         },
 
-        removeBook:  async (parent, { bookId }, { user }) {
+        removeBook:  async (parent, { bookId }, { user }) => {
             const updatedUser = await User.findOneAndUpdate(
               { _id: user._id },
               { $pull: { savedBooks: { bookId } } },
