@@ -8,9 +8,10 @@ import {
 } from 'react-bootstrap';
 
 import { useQuery, useMutation } from '@apollo/client';
-import { getMe, deleteBook } from '../utils/API.js';
+import { getMe } from '../utils/API.js';
 import Auth from '../utils/auth.js';
 import { removeBookId } from '../utils/localStorage.js';
+import {REMOVE_BOOK} from "../utils/mutations.js";
 
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
@@ -61,7 +62,7 @@ const SavedBooks = () => {
 
       //const response = await deleteBook(bookId, token);
 
-        const response =  useMutation(deleteBook, {
+        const response =  useMutation(REMOVE_BOOK, {
             variables: { bookId: bookId },
         });
 
