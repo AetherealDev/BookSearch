@@ -34,12 +34,21 @@ const resolvers = {
             return { token, user };
         },
 
-        saveBook:  async (parent, { input }, { user }) => {
-            const updatedUser = await User.findOneAndUpdate(
-              { _id: user._id },
-              { $addToSet: { savedBooks: input } },
-              { new: true, runValidators: true }
-            );
+        saveBook:  async (parent, body, { user }) => {
+            try {
+
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: user._id },
+                    { $addToSet: { savedBooks: body } },
+                    { new: true, runValidators: true }
+                );
+
+                return updatedUser;
+            } catch (error) {
+                console.error(error);
+                throw new Error('Failed to update user');
+            }
+
             return updatedUser;
         },
 
