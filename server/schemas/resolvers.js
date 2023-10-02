@@ -10,7 +10,7 @@ const resolvers = {
                     .select('-__v -password')
                 return userData;
             }
-            throw new AuthenticationError('Not logged in');
+            throw AuthenticationError;
         },
     },
 
@@ -18,11 +18,11 @@ const resolvers = {
         loginUser: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
-                throw new AuthenticationError('Incorrect credentials');
+                throw  AuthenticationError;
             }
             const correctPw = await user.isCorrectPassword(password);
             if (!correctPw) {
-                throw new AuthenticationError('Incorrect credentials');
+                throw AuthenticationError;
             }
             const token = signToken(user);
             return { token, user };
